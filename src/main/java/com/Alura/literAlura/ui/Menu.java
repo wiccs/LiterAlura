@@ -15,6 +15,7 @@ public class Menu {
                 Seleccione la operacion a realizar:
                 
                 1 ---> Busqueda de libros
+                2 ---> Listar autores registrados
               
                 """);
          this.entradaUsuario= teclado.nextInt();

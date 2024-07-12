@@ -18,6 +18,7 @@ public class ConexionApi {
                 .followRedirects(HttpClient.Redirect.ALWAYS)
                 .build();
 
+
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url))
                 .build();
@@ -25,6 +26,7 @@ public class ConexionApi {
 
 
         HttpResponse<String> response = null;
+
 
         //Capturamos los posibles errores con un try.
         try {
@@ -39,8 +41,7 @@ public class ConexionApi {
             throw new RuntimeException(e);
         }
         //Guardamos la respuesta json en una variable y la retornamos.
-        String json = response.body();
-        System.out.println("Desde Conexion: " + json);
+        var json = response.body();
         return json;
     }
 
