@@ -23,3 +23,23 @@ LiterAlura es una aplicación para la búsqueda y almacenamiento de información
 ```bash
 git clone https://github.com/tu_usuario/literalura.git
 cd literalura
+Configura la base de datos PostgreSQL:
+```
+2.Crea una base de datos llamada literalura.
+
+```
+Configura las credenciales de acceso en src/main/resources/application.properties:
+spring.datasource.url=jdbc:postgresql://localhost:5432/literalura
+spring.datasource.username=tu_usuario
+spring.datasource.password=tu_contraseña
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.jpa.format-sql=true```
+```
+
+3.Compila y ejecuta la aplicación:
+```
+mvn clean install
+mvn spring-boot:run
+```
+
