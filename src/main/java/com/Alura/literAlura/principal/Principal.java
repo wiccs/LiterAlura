@@ -1,8 +1,11 @@
 package com.Alura.literAlura.principal;
 
+import com.Alura.literAlura.modelos.DatosAutor;
 import com.Alura.literAlura.modelos.DatosLibro;
+import com.Alura.literAlura.modelos.Entidades.Autor;
 import com.Alura.literAlura.modelos.Entidades.Libro;
 import com.Alura.literAlura.repositorioBD.RepositorioBD;
+import com.Alura.literAlura.repositorioBD.RepositorioBD2;
 import com.Alura.literAlura.servicios.ConexionApi;
 import com.Alura.literAlura.ui.Menu;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -22,11 +25,14 @@ public class Principal {
     private final Scanner entrada = new Scanner(System.in);
     private final ConexionApi conectarApi = new ConexionApi();
     private RepositorioBD BD;
+    private RepositorioBD2 BD2;
+
      private final Menu menu = new Menu();
 
 
-    public Principal(RepositorioBD repository) {
+    public Principal(RepositorioBD repository,RepositorioBD2 repository2) {
         this.BD = repository;
+        this.BD2 = repository2;
     }
 
     public void iniciar() {
@@ -73,12 +79,23 @@ public class Principal {
                 JsonNode primerLibroNode = rootNode.get("results").get(0);
 
                 //Mapeamos el json a nuestra clase java:
-                DatosLibro libro = objectMapper.convertValue(primerLibroNode, DatosLibro.class);
-                System.out.println(libro);
+                DatosLibro jsonLibro = objectMapper.convertValue(primerLibroNode, DatosLibro.class);
+                System.out.println(jsonLibro);
+
+                DatosAutor jsonAutor = new DatosAutor(jsonLibro);
+                Autor autor = new Autor(jsonAutor);
+
+                BD2.save(autor);
 
                 //Guardamos en la base de datos:
-                Libro libroBD = new Libro(libro);
+                Libro libroBD = new Libro(jsonLibro,autor);
+
+
+
+                // Guardar el autor en la base de datos
+
                 BD.save(libroBD);
+
 
             } else {
                 System.out.println("No se encontraron resultados para el libro buscado.");
